@@ -16,7 +16,6 @@ class PageTemplater
 
     add_filter( 'theme_page_templates', array( $this, 'custom_template' ) );
     add_filter( 'template_include', array( $this, 'load_template' ) );
-    add_action("init", array( $this, 'handle_search_form' ));
   }
 
   public function custom_template( $templates )
@@ -47,11 +46,5 @@ class PageTemplater
     }
 
     return $template;
-  }
-
-  public function handle_search_form(){
-    if( isset( $_REQUEST["submit_search_data"] ) ) {
-        $results = "me";
-    }
   }
 }

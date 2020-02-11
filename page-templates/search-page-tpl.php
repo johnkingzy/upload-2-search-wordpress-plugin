@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
 Template Name: Search Page Layout
 */
 
@@ -16,11 +16,11 @@ if ( isset($_POST['submit_search_data'] ) ) {
     $query = "SELECT * FROM " . $table_name;
 
     if ( isset( $search_option ) && isset( $search_value ) && $search_option === "student_id" ) {
-        $query = $query . " WHERE studentID1 = " . $search_value . " OR studentID2 = " . $search_value;
+        $query = $query . " WHERE studentID1 = '" . $search_value . "' OR studentID2 = '" . $search_value ."'";
     }
 
     if ( isset( $search_option ) && isset( $search_value ) && $search_option === "student_classroom" ) {
-        $query = $query . " WHERE classroom = " . $search_value;
+        $query = $query . " WHERE classroom = '" . $search_value . "'";
     }
 
     $results = $wpdb->get_results($query);
@@ -28,26 +28,11 @@ if ( isset($_POST['submit_search_data'] ) ) {
 ?>
 
 <style>
-    h6, table {
+    h6 {
         margin: 1rem 0
-    }
-    th, td {
-        text-align: center;
-    }
-    th {
-        font-family: monospace;
-        font-size: 2em;
-        color: blue;
-    }
-    table, td, th {
-        border: 2px solid #bebe11 !important;
     }
     #container {
         padding: 0 8rem;
-    }
-    #display-table {
-        width: 55%;
-        margin: 0 auto;
     }
     #search-container {
         display: flex;
@@ -68,7 +53,7 @@ if ( isset($_POST['submit_search_data'] ) ) {
         background-color: #fff;
     }
     .animated-search-form[type=search] {
-      width: 30%;
+      /* width: 30%; */
       box-shadow: 0 0 3.125rem rgba(0, 0, 0, 0.18);
       border-radius: 0;
       background-position: 0.625rem 0.625rem;
@@ -79,7 +64,7 @@ if ( isset($_POST['submit_search_data'] ) ) {
   }
 
   .animated-search-form[type=search]:focus {
-      width: 50%;
+      /* width: 50%; */
       outline: none;
   }
 
@@ -137,14 +122,102 @@ select {
   cursor: pointer;
 }
 .error {
-    color: red;
-    background-color: #fff;
+    color: #e54b00;
+    background-color: #f8f8f8;
     width: 100%;
     text-align: center;
-    padding: 8px
+    padding: 8px;
+    overflow-x: hidden;
+    display: block;
+    width: 100%;
+    margin: .5rem 0;
 }
 .btn-info {
-    background-color: blue !important;
+    background-color: #0080ef !important;
+}
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: 1.2em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #0080ef;
+  font-family: monospace;
+  white-space: normal;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
 }
 </style>
 <div id="container">
@@ -208,7 +281,7 @@ select {
         </tbody>
     </table>
 <?php } ?>
-    <?php if( count( $results ) === 0 && isset( $_POST[ 'submit_search_data' ] ) ) echo "<h6 class='error'>The Student ID you entered is not in the list</h6>"; ?>
+    <?php if( count( $results ) === 0 && isset( $_POST[ 'submit_search_data' ] ) ) echo "<span class='error'>The Student ID you entered is not in the list</span>"; ?>
 </div>
 <br />
 
