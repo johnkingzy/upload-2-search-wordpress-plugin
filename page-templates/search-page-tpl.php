@@ -28,12 +28,33 @@ if ( isset($_POST['submit_search_data'] ) ) {
 ?>
 
 <style>
+body {
+  background-color: #1e73be;
+}
     h6 {
         margin: 1rem 0
     }
-    #container {
-        padding: 0 8rem;
-    }
+    .container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
     #search-container {
         display: flex;
         flex-direction: column;
@@ -53,13 +74,12 @@ if ( isset($_POST['submit_search_data'] ) ) {
         background-color: #fff;
     }
     .animated-search-form[type=search] {
-      /* width: 30%; */
+      width: 25rem;
       box-shadow: 0 0 3.125rem rgba(0, 0, 0, 0.18);
       border-radius: 0;
       background-position: 0.625rem 0.625rem;
       background-repeat: no-repeat;
       padding: 0.75rem 1.25rem 0.75rem 2rem;
-      transition: width 0.4s ease-in-out;
       height: 60px
   }
 
@@ -159,6 +179,7 @@ table th,
 table td {
   padding: .625em;
   text-align: center;
+  border: 4px solid #bebe11 !important;
 }
 
 table th {
@@ -220,76 +241,61 @@ table th {
   }
 }
 </style>
-<div id="container">
-    <form action="" method="post" id="search-container">
+<!-- Display table -->
+<div id="display-table" class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form action="" method="post" id="search-container">
         <h1>Search for Students</h1>
         <div class="form-group">
-           <!--  <div class="select">
-                <select name="search_option" id="search_options">
-                <option value="student_id">Student ID</option>
-                <option value="student_classroom">Student Classroom</option>
-            </select>
-            </div> -->
-            <input type="hidden" name="search_secret" value="">
-            <input type="search" name="search" placeholder="Search for Student ID.." class="animated-search-form form-control">
+          <input type="hidden" name="search_secret" value="">
+          <input type="search" name="search" placeholder="Search for Student ID.." class="animated-search-form form-control">
         </div>
         <button class="btn btn-info" type="submit" name="submit_search_data"> Search </button>
-    </form>
-
-    <!-- Display table -->
-    <div id="display-table" class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-          <div class="card-body">
-              <div class="table-responsive">
-                <?php if (isset( $_POST[ 'submit_search_data' ] )) { ?>
-                <h4 class="card-title ">Results (<?= count($results); ?>) </h4>
-                <table class="table">
-                  <thead class="text-primary">
-                <tr>
-                    <th>
-                      Student ID
-                  </th>
-                  <th>
-                      Student ID
-                  </th>
-                  <th>
-                      Student Classroom
-                  </th>
-              </tr></thead>
-              <tbody>
-                <?php foreach ($results as $row) { ?>
-                <tr>
-                  <td>
-                    <strong>
+      </form>
+      <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+              <?php if (isset( $_POST[ 'submit_search_data' ] )) { ?>
+              <h4 class="card-title ">Results (<?= count($results); ?>) </h4>
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th>Student ID</th>
+                    <th>Student ID</th>
+                    <th>Student Classroom</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($results as $row) { ?>
+                  <tr>
+                    <td>
+                      <strong>
                         <?= $row->studentID1 ?>
-                    </strong>
-                </td>
-                <td>
-                    <strong>
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
                         <?= $row->studentID2 ?>
-                    </strong>
-                </td>
-                <td>
-                    <strong>
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
                         <?= $row->classroom ?>
-                    </strong>
-                </td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-<?php } ?>
-    <?php if( count( $results ) === 0 && isset( $_POST[ 'submit_search_data' ] ) ) echo "<span class='error'>The Student ID you entered is not in the list</span>"; ?>
-</div>
-<br />
-
-</div>
-</div>
-
-</div>
-</div>
+                      </strong>
+                    </td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+              <?php } ?>
+              <?php if( count( $results ) === 0 && isset( $_POST[ 'submit_search_data' ] ) ) echo "<span class='error'>The Student ID you entered is not in the list</span>"; ?>
+            </div>
+            <br />
+          </div>
+        </div>
+    </div>
+  </div>
 </div>
 <?php
 get_footer();
